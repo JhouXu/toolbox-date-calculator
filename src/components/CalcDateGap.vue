@@ -135,14 +135,14 @@ function formatDay(diff) {
   background-color: var(--van-background-2);
 
   &-input-date,
-  &-input-day {
+  &-day {
     color: #1989fa;
     font-weight: bold;
   }
   &-input-date {
     font-size: 18px;
   }
-  &-input-day {
+  &-day {
     font-size: 36px;
   }
 }

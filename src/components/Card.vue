@@ -25,7 +25,7 @@ const props = defineProps({
 <style scoped>
 .card-title {
   margin: 0;
-  padding: 16px;
+  padding: 32px 16px 16px;
   font-size: 14px;
   font-weight: 400;
   line-height: 16px;

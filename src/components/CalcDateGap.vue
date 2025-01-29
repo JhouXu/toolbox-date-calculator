@@ -3,17 +3,10 @@ import { ref, onMounted, watchEffect } from "vue";
 import Card from "@/components/Card.vue";
 import CellDate from "@/components/CellDate.vue";
 import CellDay from "@/components/CellDay.vue";
-import {
-  getTodayFormattedDate,
-  getDayOfWeek,
-  calculateYearDayDifference,
-  calculateMonthDayDifference,
-  calculateWeekDayDifference,
-  calculateTotalDaysDifference,
-} from "@/utils/date.tool.ts";
+import * as D from "@/utils/date.tool.ts";
 
-const startDate = ref(getTodayFormattedDate());
-const endDate = ref(getTodayFormattedDate());
+const startDate = ref(D.getTodayFormattedDate());
+const endDate = ref(D.getTodayFormattedDate());
 const selectType = ref(""); // start || end
 const calcDate = ref({
   yearDay: "",
@@ -24,15 +17,15 @@ const calcDate = ref({
 const isStart = ref(false);
 
 const showPopup = ref(false);
-const currentDate = ref(getTodayFormattedDate().split("-"));
+const currentDate = ref(D.getTodayFormattedDate().split("-"));
 const minDate = ref(new Date(1950, 0, 1));
 const maxDate = ref(new Date(2100, 11, 31));
 
 watchEffect(() => {
-  const yearDay = calculateYearDayDifference(startDate.value, endDate.value, isStart.value);
-  const monthDay = calculateMonthDayDifference(startDate.value, endDate.value, isStart.value);
-  const weekDay = calculateWeekDayDifference(startDate.value, endDate.value, isStart.value);
-  const totalDay = calculateTotalDaysDifference(startDate.value, endDate.value, isStart.value);
+  const yearDay = D.calculateYearDayDifference(startDate.value, endDate.value, isStart.value);
+  const monthDay = D.calculateMonthDayDifference(startDate.value, endDate.value, isStart.value);
+  const weekDay = D.calculateWeekDayDifference(startDate.value, endDate.value, isStart.value);
+  const totalDay = D.calculateTotalDaysDifference(startDate.value, endDate.value, isStart.value);
   calcDate.value = {
     yearDay: formatDay(yearDay),
     monthDay: formatDay(monthDay),
@@ -64,7 +57,7 @@ function formatDay(diff) {
             selectType = 'start';
           }
         ">
-        <CellDate prefix="从" suffix="开始" :date="startDate" :week="getDayOfWeek(startDate)" />
+        <CellDate prefix="从" suffix="开始" :date="startDate" :week="D.getDayOfWeek(startDate)" />
       </div>
       <div
         @click="
@@ -74,7 +67,7 @@ function formatDay(diff) {
             selectType = 'end';
           }
         ">
-        <CellDate prefix="至" suffix="结束" :date="endDate" :week="getDayOfWeek(endDate)" />
+        <CellDate prefix="至" suffix="结束" :date="endDate" :week="D.getDayOfWeek(endDate)" />
       </div>
       <div>
         <CellDay prefix="共" :day="calcDate.totalDay" />

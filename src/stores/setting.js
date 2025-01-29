@@ -5,11 +5,17 @@ export const useSettingStore = defineStore("setting", () => {
   const theme = ref("light");
 
   function updateTheme() {
-    theme.value = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      theme.value = savedTheme;
+    } else {
+      theme.value = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
   }
 
   function toggleTheme() {
     theme.value = theme.value === "light" ? "dark" : "light";
+    localStorage.setItem("theme", theme.value);
   }
 
   onMounted(() => {

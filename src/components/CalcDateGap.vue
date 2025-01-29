@@ -55,36 +55,36 @@ function formatDay(diff) {
 
 <template>
   <Card title="计算日期间隔" type="card">
-    <div
-      class="item item-input"
-      @click="
-        () => {
-          currentDate = startDate.split('-');
-          showPopup = true;
-          selectType = 'start';
-        }
-      ">
-      <CellDate prefix="从" suffix="开始" :date="startDate" :week="getDayOfWeek(startDate)" />
-    </div>
-    <div
-      class="item item-input"
-      @click="
-        () => {
-          currentDate = endDate.split('-');
-          showPopup = true;
-          selectType = 'end';
-        }
-      ">
-      <CellDate prefix="至" suffix="结束" :date="endDate" :week="getDayOfWeek(endDate)" />
-    </div>
-    <div class="item">
-      <CellDay prefix="共" :day="calcDate.totalDay" />
-    </div>
-    <div v-show="calcDate.yearDay" class="item"> {{ calcDate.yearDay }} </div>
-    <div v-show="calcDate.monthDay" class="item"> {{ calcDate.monthDay }} </div>
-    <div v-show="calcDate.weekDay" class="item"> {{ calcDate.weekDay }} </div>
-    <div class="item">
-      <van-checkbox v-model="isStart">包含起始日</van-checkbox>
+    <div class="content">
+      <div
+        @click="
+          () => {
+            currentDate = startDate.split('-');
+            showPopup = true;
+            selectType = 'start';
+          }
+        ">
+        <CellDate prefix="从" suffix="开始" :date="startDate" :week="getDayOfWeek(startDate)" />
+      </div>
+      <div
+        @click="
+          () => {
+            currentDate = endDate.split('-');
+            showPopup = true;
+            selectType = 'end';
+          }
+        ">
+        <CellDate prefix="至" suffix="结束" :date="endDate" :week="getDayOfWeek(endDate)" />
+      </div>
+      <div>
+        <CellDay prefix="共" :day="calcDate.totalDay" />
+      </div>
+      <div v-show="calcDate.yearDay"> {{ calcDate.yearDay }} </div>
+      <div v-show="calcDate.monthDay"> {{ calcDate.monthDay }} </div>
+      <div v-show="calcDate.weekDay"> {{ calcDate.weekDay }} </div>
+      <div>
+        <van-checkbox v-model="isStart">包含起始日</van-checkbox>
+      </div>
     </div>
   </Card>
 
@@ -112,7 +112,7 @@ function formatDay(diff) {
 </template>
 
 <style lang="scss" scoped>
-.item {
+.content > div {
   position: relative;
   display: flex;
   justify-content: center;
@@ -123,7 +123,7 @@ function formatDay(diff) {
   background-color: var(--van-background-2);
 }
 
-.item:not(:last-child)::after {
+.content > div:not(:last-child)::after {
   position: absolute;
   right: var(--van-padding-md);
   left: var(--van-padding-md);

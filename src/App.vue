@@ -2,6 +2,8 @@
 import { ref, onMounted, onBeforeMount, watch, computed } from "vue";
 import { useSettingStore } from "@/stores/setting";
 import NavBar from "@/components/NavBar.vue";
+import CalcDate from "@/components/CalcDate.vue";
+import CalcDateGap from "@/components/CalcDateGap.vue";
 
 const settingsStore = useSettingStore();
 
@@ -15,7 +17,10 @@ const theme = computed(() => {
     <div class="theme" :class="theme === 'dark' ? 'theme-dark' : 'theme-light'">
       <NavBar />
 
-      <div> Hello Date Calculator </div>
+      <div class="container">
+        <CalcDate />
+        <CalcDateGap />
+      </div>
     </div>
   </van-config-provider>
 </template>

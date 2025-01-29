@@ -125,6 +125,7 @@ function formatDay(diff) {
 
 <style lang="scss" scoped>
 .item {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -144,5 +145,17 @@ function formatDay(diff) {
   &-input-day {
     font-size: 36px;
   }
+}
+
+.item:not(:last-child)::after {
+  position: absolute;
+  right: var(--van-padding-md);
+  left: var(--van-padding-md);
+  bottom: 0;
+  border-bottom: 1px solid #737373;
+  transform: scaleY(0.2);
+  box-sizing: border-box;
+  pointer-events: none;
+  content: "";
 }
 </style>

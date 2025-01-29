@@ -1,6 +1,8 @@
 <script setup>
 import { ref, onMounted, watchEffect } from "vue";
 import Card from "@/components/Card.vue";
+import CellDate from "@/components/CellDate.vue";
+import CellDay from "@/components/CellDay.vue";
 import {
   getTodayFormattedDate,
   getDayOfWeek,
@@ -62,12 +64,7 @@ function formatDay(diff) {
           selectType = 'start';
         }
       ">
-      <span>从</span>
-      <span class="item-input-date"> {{ startDate }} {{ getDayOfWeek(startDate) }} </span>
-      <span style="transform: rotate(90deg) translateX(-2px)">
-        <van-icon name="play" />
-      </span>
-      <span>开始</span>
+      <CellDate prefix="从" suffix="开始" :date="startDate" :week="getDayOfWeek(startDate)" />
     </div>
     <div
       class="item item-input"
@@ -78,24 +75,15 @@ function formatDay(diff) {
           selectType = 'end';
         }
       ">
-      <span>至</span>
-      <span class="item-input-date"> {{ endDate }} {{ getDayOfWeek(endDate) }} </span>
-      <span style="transform: rotate(90deg) translateX(-2px)">
-        <van-icon name="play" />
-      </span>
-      <span>结束</span>
+      <CellDate prefix="至" suffix="结束" :date="endDate" :week="getDayOfWeek(endDate)" />
     </div>
     <div class="item">
-      <span>共</span>
-      <span class="item-day">{{ calcDate.totalDay }}</span>
-      <span>
-        <van-tag type="primary" size="large">Days</van-tag>
-      </span>
+      <CellDay prefix="共" :day="calcDate.totalDay" />
     </div>
     <div v-show="calcDate.yearDay" class="item"> {{ calcDate.yearDay }} </div>
     <div v-show="calcDate.monthDay" class="item"> {{ calcDate.monthDay }} </div>
     <div v-show="calcDate.weekDay" class="item"> {{ calcDate.weekDay }} </div>
-    <div class="item item-input">
+    <div class="item">
       <van-checkbox v-model="isStart">包含起始日</van-checkbox>
     </div>
   </Card>
@@ -129,22 +117,10 @@ function formatDay(diff) {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 10px;
   font-size: 16px;
   height: 60px;
-  gap: 10px;
   background-color: var(--van-background-2);
-
-  &-input-date,
-  &-day {
-    color: #1989fa;
-    font-weight: bold;
-  }
-  &-input-date {
-    font-size: 18px;
-  }
-  &-day {
-    font-size: 36px;
-  }
 }
 
 .item:not(:last-child)::after {

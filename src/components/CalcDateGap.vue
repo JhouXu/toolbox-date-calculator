@@ -10,10 +10,10 @@ import {
   calculateTotalDaysDifference,
 } from "@/utils/date.tool.ts";
 
-const startDay = ref(getTodayFormattedDate());
-const endDay = ref(getTodayFormattedDate());
+const startDate = ref(getTodayFormattedDate());
+const endDate = ref(getTodayFormattedDate());
 const selectType = ref(""); // start || end
-const calcDay = ref({
+const calcDate = ref({
   yearDay: "",
   monthDay: "",
   weekDay: "",
@@ -27,11 +27,11 @@ const minDate = ref(new Date(1950, 0, 1));
 const maxDate = ref(new Date(2100, 11, 31));
 
 watchEffect(() => {
-  const yearDay = calculateYearDayDifference(startDay.value, endDay.value, isStart.value);
-  const monthDay = calculateMonthDayDifference(startDay.value, endDay.value, isStart.value);
-  const weekDay = calculateWeekDayDifference(startDay.value, endDay.value, isStart.value);
-  const totalDay = calculateTotalDaysDifference(startDay.value, endDay.value, isStart.value);
-  calcDay.value = {
+  const yearDay = calculateYearDayDifference(startDate.value, endDate.value, isStart.value);
+  const monthDay = calculateMonthDayDifference(startDate.value, endDate.value, isStart.value);
+  const weekDay = calculateWeekDayDifference(startDate.value, endDate.value, isStart.value);
+  const totalDay = calculateTotalDaysDifference(startDate.value, endDate.value, isStart.value);
+  calcDate.value = {
     yearDay: formatDay(yearDay),
     monthDay: formatDay(monthDay),
     weekDay: formatDay(weekDay),
@@ -57,13 +57,13 @@ function formatDay(diff) {
       class="item item-input"
       @click="
         () => {
-          currentDate = startDay.split('-');
+          currentDate = startDate.split('-');
           showPopup = true;
           selectType = 'start';
         }
       ">
       <span>从</span>
-      <span class="item-input-date"> {{ startDay }} {{ getDayOfWeek(startDay) }} </span>
+      <span class="item-input-date"> {{ startDate }} {{ getDayOfWeek(startDate) }} </span>
       <span style="transform: rotate(90deg) translateX(-2px)">
         <van-icon name="play" />
       </span>
@@ -73,13 +73,13 @@ function formatDay(diff) {
       class="item item-input"
       @click="
         () => {
-          currentDate = endDay.split('-');
+          currentDate = endDate.split('-');
           showPopup = true;
           selectType = 'end';
         }
       ">
       <span>至</span>
-      <span class="item-input-date"> {{ endDay }} {{ getDayOfWeek(endDay) }} </span>
+      <span class="item-input-date"> {{ endDate }} {{ getDayOfWeek(endDate) }} </span>
       <span style="transform: rotate(90deg) translateX(-2px)">
         <van-icon name="play" />
       </span>
@@ -87,14 +87,14 @@ function formatDay(diff) {
     </div>
     <div class="item">
       <span>共</span>
-      <span class="item-day">{{ calcDay.totalDay }}</span>
+      <span class="item-day">{{ calcDate.totalDay }}</span>
       <span>
         <van-tag type="primary" size="large">Days</van-tag>
       </span>
     </div>
-    <div v-show="calcDay.yearDay" class="item"> {{ calcDay.yearDay }} </div>
-    <div v-show="calcDay.monthDay" class="item"> {{ calcDay.monthDay }} </div>
-    <div v-show="calcDay.weekDay" class="item"> {{ calcDay.weekDay }} </div>
+    <div v-show="calcDate.yearDay" class="item"> {{ calcDate.yearDay }} </div>
+    <div v-show="calcDate.monthDay" class="item"> {{ calcDate.monthDay }} </div>
+    <div v-show="calcDate.weekDay" class="item"> {{ calcDate.weekDay }} </div>
     <div class="item item-input">
       <van-checkbox v-model="isStart">包含起始日</van-checkbox>
     </div>
@@ -111,10 +111,10 @@ function formatDay(diff) {
           const format = selectedValues.join('-');
           switch (selectType) {
             case 'start':
-              startDay = format;
+              startDate = format;
               break;
             case 'end':
-              endDay = format;
+              endDate = format;
               break;
           }
           showPopup = false;

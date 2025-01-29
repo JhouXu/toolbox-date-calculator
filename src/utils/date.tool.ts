@@ -14,8 +14,12 @@ export function getDayOfWeek(dateString: string): string {
 }
 
 export function calculateYearDayDifference(startDate: string, endDate: string, isStart: boolean = false) {
-  const start = new Date(startDate);
-  const end = new Date(endDate);
+  let start = new Date(startDate);
+  let end = new Date(endDate);
+
+  if (end < start) {
+    [start, end] = [end, start];
+  }
 
   let years = end.getFullYear() - start.getFullYear();
   let months = end.getMonth() - start.getMonth();
@@ -40,8 +44,12 @@ export function calculateYearDayDifference(startDate: string, endDate: string, i
 }
 
 export function calculateMonthDayDifference(startDate: string, endDate: string, isStart: boolean = false) {
-  const start = new Date(startDate);
-  const end = new Date(endDate);
+  let start = new Date(startDate);
+  let end = new Date(endDate);
+
+  if (end < start) {
+    [start, end] = [end, start];
+  }
 
   let months = end.getMonth() - start.getMonth() + (end.getFullYear() - start.getFullYear()) * 12;
   let days = end.getDate() - start.getDate();
@@ -60,8 +68,12 @@ export function calculateMonthDayDifference(startDate: string, endDate: string, 
 }
 
 export function calculateWeekDayDifference(startDate: string, endDate: string, isStart: boolean = false) {
-  const start = new Date(startDate);
-  const end = new Date(endDate);
+  let start = new Date(startDate);
+  let end = new Date(endDate);
+
+  if (end < start) {
+    [start, end] = [end, start];
+  }
 
   const millisecondsPerDay = 24 * 60 * 60 * 1000;
   const millisecondsPerWeek = 7 * millisecondsPerDay;
@@ -80,8 +92,12 @@ export function calculateWeekDayDifference(startDate: string, endDate: string, i
 }
 
 export function calculateTotalDaysDifference(startDate: string, endDate: string, isStart: boolean = false) {
-  const start = new Date(startDate);
-  const end = new Date(endDate);
+  let start = new Date(startDate);
+  let end = new Date(endDate);
+
+  if (end < start) {
+    [start, end] = [end, start];
+  }
 
   const millisecondsPerDay = 24 * 60 * 60 * 1000;
   const totalMilliseconds = end.getTime() - start.getTime();

@@ -25,4 +25,9 @@ const theme = computed(() => {
   </van-config-provider>
 </template>
 
-<style scoped></style>
+<style scoped>
+.container {
+  margin: 0 auto;
+  max-width: 768px;
+}
+</style>

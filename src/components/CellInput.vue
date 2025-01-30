@@ -72,7 +72,7 @@ function selectAction(text) {
 
   &-field {
     display: flex;
-    border: 1px solid skyblue;
+    border: 1px solid #737373;
     border-radius: 24px;
     overflow: hidden;
 
@@ -88,7 +88,7 @@ function selectAction(text) {
       align-items: center;
       height: 100%;
       box-sizing: border-box;
-      border-left: 1px solid skyblue;
+      border-left: 1px solid #737373;
     }
 
     &-label {

@@ -4,6 +4,7 @@ import Card from "@/components/Card.vue";
 import CellDate from "@/components/CellDate.vue";
 import CellInput from "@/components/CellInput.vue";
 import * as D from "@/utils/date.tool.ts";
+import { minDate, maxDate } from "@/config.js";
 
 const startDate = ref(D.getTodayFormattedDate());
 const beforeDate = ref(D.getTodayFormattedDate());
@@ -15,8 +16,8 @@ const afterRatio = ref(0);
 
 const showPopup = ref(false);
 const currentDate = ref(D.getTodayFormattedDate().split("-"));
-const minDate = ref(new Date(1950, 0, 1));
-const maxDate = ref(new Date(2100, 11, 31));
+const minDatePicker = ref(new Date(minDate));
+const maxDatePicker = ref(new Date(maxDate));
 
 watchEffect(() => {
   beforeDate.value = D.calculateDate(startDate.value, beforeNumber.value * beforeRatio.value, "before");
@@ -70,8 +71,8 @@ watchEffect(() => {
   <van-popup v-model:show="showPopup" position="bottom" round>
     <van-date-picker
       v-model="currentDate"
-      :min-date="minDate"
-      :max-date="maxDate"
+      :min-date="minDatePicker"
+      :max-date="maxDatePicker"
       @cancel="showPopup = false"
       @confirm="
         ({ selectedValues }) => {

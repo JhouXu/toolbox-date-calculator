@@ -4,6 +4,7 @@ import Card from "@/components/Card.vue";
 import CellDate from "@/components/CellDate.vue";
 import CellDay from "@/components/CellDay.vue";
 import * as D from "@/utils/date.tool.ts";
+import { minDate, maxDate } from "@/config.js";
 
 const startDate = ref(D.getTodayFormattedDate());
 const endDate = ref(D.getTodayFormattedDate());
@@ -18,8 +19,8 @@ const isStart = ref(false);
 
 const showPopup = ref(false);
 const currentDate = ref(D.getTodayFormattedDate().split("-"));
-const minDate = ref(new Date(1950, 0, 1));
-const maxDate = ref(new Date(2100, 11, 31));
+const minDatePicker = ref(new Date(minDate));
+const maxDatePicker = ref(new Date(maxDate));
 
 watchEffect(() => {
   const yearDay = D.calculateYearDayDifference(startDate.value, endDate.value, isStart.value);
@@ -84,8 +85,8 @@ function formatDay(diff) {
   <van-popup v-model:show="showPopup" position="bottom" round>
     <van-date-picker
       v-model="currentDate"
-      :min-date="minDate"
-      :max-date="maxDate"
+      :min-date="minDatePicker"
+      :max-date="maxDatePicker"
       @cancel="showPopup = false"
       @confirm="
         ({ selectedValues }) => {

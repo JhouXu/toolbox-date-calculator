@@ -11,11 +11,10 @@ const emits = defineEmits(["updateNumber", "updateUnit"]);
 
 const showPopover = ref(false);
 const type = ref("");
-const actionsPopover = ref(actions);
+const actionsPopover = ref(JSON.parse(JSON.stringify(actions)));
 const actionColor = "#1989fa";
 
 onMounted(() => {
-  console.log(actionsPopover.value);
   selectAction(actionsPopover.value.at(-1).text);
 });
 
@@ -30,8 +29,6 @@ function selectAction(text) {
       item.color = "";
     }
   });
-
-  console.log(actionsPopover.value);
   emits("updateUnit", value);
 }
 </script>
@@ -47,7 +44,7 @@ function selectAction(text) {
         center
         maxlength="3"
         @update:model-value="emits('updateNumber', $event)" />
-      <van-popover v-model:show="showPopover" :actions="actions" @select="($event) => selectAction($event.text)">
+      <van-popover v-model:show="showPopover" :actions="actionsPopover" @select="($event) => selectAction($event.text)">
         <template #reference>
           <div class="input-field__type">
             <span>{{ type }}</span>

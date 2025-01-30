@@ -4,15 +4,15 @@ import Card from "@/components/Card.vue";
 import CellDate from "@/components/CellDate.vue";
 import CellInput from "@/components/CellInput.vue";
 import * as D from "@/utils/date.tool.ts";
-import { minDate, maxDate } from "@/config.js";
+import { minDate, maxDate, actions } from "@/config.js";
 
 const startDate = ref(D.getTodayFormattedDate());
 const beforeDate = ref(D.getTodayFormattedDate());
 const afterDate = ref(D.getTodayFormattedDate());
 const beforeNumber = ref("");
 const afterNumber = ref("");
-const beforeRatio = ref(0);
-const afterRatio = ref(0);
+const beforeUnit = ref(actions.at(-1).value);
+const afterUnit = ref(actions.at(-1).value);
 
 const showPopup = ref(false);
 const currentDate = ref(D.getTodayFormattedDate().split("-"));
@@ -20,11 +20,11 @@ const minDatePicker = ref(new Date(minDate));
 const maxDatePicker = ref(new Date(maxDate));
 
 watchEffect(() => {
-  beforeDate.value = D.calculateDate(startDate.value, beforeNumber.value * beforeRatio.value, "before");
+  beforeDate.value = D.calculateDate(startDate.value, beforeNumber.value, beforeUnit.value, "before");
 });
 
 watchEffect(() => {
-  afterDate.value = D.calculateDate(startDate.value, afterNumber.value * afterRatio.value, "after");
+  afterDate.value = D.calculateDate(startDate.value, afterNumber.value, afterUnit.value, "after");
 });
 </script>
 
@@ -46,7 +46,7 @@ watchEffect(() => {
           :number="beforeNumber"
           suffix="之前"
           @updateNumber="(num) => (beforeNumber = num)"
-          @updateRatio="(ratio) => (beforeRatio = ratio)" />
+          @updateUnit="(unit) => (beforeUnit = unit)" />
       </div>
       <div class="item-display">
         <span>公元</span>
@@ -58,7 +58,7 @@ watchEffect(() => {
           :number="afterNumber"
           suffix="之后"
           @updateNumber="(num) => (afterNumber = num)"
-          @updateRatio="(ratio) => (afterRatio = ratio)" />
+          @updateUnit="(ratio) => (afterUnit = ratio)" />
       </div>
       <div class="item-display">
         <span>公元</span>

@@ -1,39 +1,38 @@
 <script setup>
 import { ref, onMounted } from "vue";
+import { actions } from "@/config.js";
 
 const props = defineProps({
   number: { type: [Number, String], default: "" },
   suffix: { type: String, default: "" },
 });
 
-const emits = defineEmits(["updateNumber", "updateRatio"]);
+const emits = defineEmits(["updateNumber", "updateUnit"]);
 
 const showPopover = ref(false);
 const type = ref("");
-const actions = [
-  { text: "年", color: "", ratio: 365 },
-  { text: "月", color: "", ratio: 30 },
-  { text: "周", color: "", ratio: 7 },
-  { text: "天", color: "", ratio: 1 },
-];
+const actionsPopover = ref(actions);
 const actionColor = "#1989fa";
 
 onMounted(() => {
-  selectAction(actions.at(-1).text);
+  console.log(actionsPopover.value);
+  selectAction(actionsPopover.value.at(-1).text);
 });
 
 function selectAction(text) {
-  let ratio = 0;
+  let value = 0;
   type.value = text;
-  actions.map((item) => {
+  actionsPopover.value.map((item) => {
     if (item.text === type.value) {
       item.color = actionColor;
-      ratio = item.ratio;
+      value = item.value;
     } else {
       item.color = "";
     }
   });
-  emits("updateRatio", ratio);
+
+  console.log(actionsPopover.value);
+  emits("updateUnit", value);
 }
 </script>
 

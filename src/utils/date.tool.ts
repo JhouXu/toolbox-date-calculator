@@ -110,27 +110,45 @@ export function calculateTotalDaysDifference(startDate: string, endDate: string,
   return totalDays;
 }
 
-// utils/date.tool.js
-
-export function calculateDate(dateString: string, days: number, type: string = "after") {
-  // 将输入的日期字符串转换为 Date 对象
+export function calculateDate(
+  dateString: string,
+  amount: string | number,
+  unit: string = "days",
+  type: string = "after"
+) {
   const date = new Date(dateString);
 
-  // 检查日期是否有效
   if (isNaN(date.getTime())) {
     throw new Error("Invalid date format");
   }
 
-  // 根据类型调整日期
-  if (type === "before") {
-    date.setDate(date.getDate() - days);
-  } else if (type === "after") {
-    date.setDate(date.getDate() + days);
-  } else {
-    throw new Error("Invalid type. Use 'before' or 'after'");
+  let amountNumber = typeof amount === "string" ? Number(amount) : amount;
+
+  if (isNaN(amountNumber)) {
+    throw new Error("Invalid amount. Must be a number");
   }
 
-  // 返回格式化后的日期字符串
+  if (type === "before") {
+    amountNumber = -amountNumber;
+  }
+
+  switch (unit) {
+    case "days":
+      date.setDate(date.getDate() + amountNumber);
+      break;
+    case "weeks":
+      date.setDate(date.getDate() + amountNumber * 7);
+      break;
+    case "months":
+      date.setMonth(date.getMonth() + amountNumber);
+      break;
+    case "years":
+      date.setFullYear(date.getFullYear() + amountNumber);
+      break;
+    default:
+      throw new Error("Invalid unit. Use 'days', 'weeks', 'months', or 'years'");
+  }
+
   return date.toISOString().split("T")[0];
 }
 

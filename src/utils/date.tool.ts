@@ -110,6 +110,30 @@ export function calculateTotalDaysDifference(startDate: string, endDate: string,
   return totalDays;
 }
 
+// utils/date.tool.js
+
+export function calculateDate(dateString: string, days: number, type: string = "after") {
+  // 将输入的日期字符串转换为 Date 对象
+  const date = new Date(dateString);
+
+  // 检查日期是否有效
+  if (isNaN(date.getTime())) {
+    throw new Error("Invalid date format");
+  }
+
+  // 根据类型调整日期
+  if (type === "before") {
+    date.setDate(date.getDate() - days);
+  } else if (type === "after") {
+    date.setDate(date.getDate() + days);
+  } else {
+    throw new Error("Invalid type. Use 'before' or 'after'");
+  }
+
+  // 返回格式化后的日期字符串
+  return date.toISOString().split("T")[0];
+}
+
 export function padZero(num: number): string {
   return num.toString().padStart(2, "0");
 }

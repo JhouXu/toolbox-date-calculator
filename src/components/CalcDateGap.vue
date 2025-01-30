@@ -112,7 +112,7 @@ function formatDay(diff) {
   align-items: center;
   gap: 10px;
   font-size: 16px;
-  height: 60px;
+  min-height: 60px;
   background-color: var(--van-background-2);
 }
 
